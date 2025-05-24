@@ -5,23 +5,55 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import BuddyCard from '@/components/buddyCard'
+import BuddyList from '@/components/buddyList'
+import CallToAction from '@/components/callToAction'
+import { recentSessions } from '@/constants'
 
 
 const Page = () => {
   return (
-    <div className='flex gap-8'>
-      <h1 className='text-xl font-bold pt-4 pl-5'>
-        Selamat datang, anda berada di LecTalk! 
-      </h1>
-      <Accordion className='items-center justify-center' type="single" collapsible>
-        <AccordionItem value="item-1" className='flex'>
-          <AccordionTrigger className=''>Is it accessible?</AccordionTrigger>
-          <AccordionContent>
-            Antarmuka Pengguna yang bersih, untuk meningkatkan navigasi fitur.
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+    <main>
+      <h1 className=''>Buddy Terpopuler!</h1>
+
+      <section className='home-section'>
+        <BuddyCard
+          ID='123'
+          name='Paulus Pemandu 1'
+          topic='Ahlinya Olahragawan'
+          subject='Olahraga'
+          duration={35}
+          color='#FF6B6B'
+        />
+
+        <BuddyCard
+          ID='124'
+          name='Paulus Pemandu 2'
+          topic='Ahlinya Olahragawan'
+          subject='Olahraga'
+          duration={15}
+          color='#E74C3C'
+        />
+
+        <BuddyCard
+          ID='125'
+          name='Paulus Pemandu 3'
+          topic='Ahlinya Olahragawan'
+          subject='Olahraga'
+          duration={55}
+          color='#FF3E4D'
+        />
+      </section>
+
+      <section className='home-section'>
+        <CallToAction/>
+        <BuddyList
+          title='Sesi Selesai Terkini'
+          buddies={recentSessions}
+          classNames='w-2/3 max-lg:w-full'
+        />
+      </section>
+    </main>
   )
 }
 

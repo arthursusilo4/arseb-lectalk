@@ -15,7 +15,7 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  title: "Converso",
+  title: "LecTalk",
   description: "Real-time AI Teaching Platform",
 };
 
