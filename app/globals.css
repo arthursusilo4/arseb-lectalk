@@ -185,7 +185,18 @@ body {
     @apply rounded-4xl border border-black;
   }
   .call-to-action-section {
-    @apply bg-gray-600 text-white rounded-4xl px-7 py-10 flex flex-col items-center text-center gap-5 w-1/3 max-lg:w-1/2 max-md:w-full;
+    @apply bg-gray-600 text-white rounded-4xl px-7 py-10 flex flex-col items-center text-center gap-5 w-1/3 max-lg:w-1/2 max-md:w-full cursor-pointer transition-all duration-500 ease-out;
+
+    /* Force hardware acceleration and smooth rendering */
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      
+      /* Animasi Hover Smooooth */
+      &:hover {
+          transform: translateY(-4px) translateZ(0);
+      }
   }
   .call-to-action-badge {
     @apply bg-[#FFDB58] rounded-4xl px-3 py-1.5 text-gray-900;

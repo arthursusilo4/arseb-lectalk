@@ -39,8 +39,8 @@ const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
                                             <Image 
                                             src={`/icons/${subject}.svg`} 
                                             alt={subject}
-                                            width={35}
-                                            height={35} />
+                                            width={45}
+                                            height={45} />
                                         </div>
                                         <div className="flex flex-col gap-2 pl-2">
                                              <p className="font-bold text-xl">{name}</p>
