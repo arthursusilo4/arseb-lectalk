@@ -20,7 +20,7 @@ const NavItems = () => {
                href={href} 
                key={label} 
                className={cn(
-               'transition-all duration-500 ease-out hover:-translate-y-1',
+               'nav-items',
                pathname === href && 'text-primary font-bold'
                )}
                >
