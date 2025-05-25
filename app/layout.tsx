@@ -31,7 +31,7 @@ export default function RootLayout({
     
     <html lang="en">
       <body className={`${robotoSlab.variable} antialiased`}>
-        <ClerkProvider appearance={{ variables: { colorPrimary: "#ffffff" } }}>
+        <ClerkProvider appearance={{ variables: { colorPrimary: "#87CEEB" } }}>
           <Navbar />
           {children}
         </ClerkProvider>
