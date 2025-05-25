@@ -197,7 +197,7 @@ const BuddyForm = () => {
                     </FormItem>
                     )}
                />
-               <button type="submit" className='w-full cursor-pointer btn-primary'>Done, Sumbit</button>
+               <button type="submit" className='cursor-pointer btn-primary'>Done, Sumbit</button>
                </form>
           </Form>
      )

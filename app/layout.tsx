@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import {
+  ClerkProvider
+} from '@clerk/nextjs'
 import { Bricolage_Grotesque, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
@@ -25,11 +28,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <html lang="en">
-      <body className={`${bricolage.variable} ${robotoSlab.variable} antialiased`}>
-        <Navbar />
-        {children}
+      <body className={`${robotoSlab.variable} antialiased`}>
+        <ClerkProvider appearance={{ variables: { colorPrimary: "#ffffff" } }}>
+          <Navbar />
+          {children}
+        </ClerkProvider>
       </body>
     </html>
+    
   );
 }
