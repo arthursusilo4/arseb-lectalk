@@ -148,36 +148,78 @@ body {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center;
   }
   .buddy-card {
-    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl transition-all duration-500 ease-out hover:shadow-2xl;
-
-      /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      
-      /* Animasi Hover Smooooth */
-      &:hover {
-          transform: translateY(-4px) translateZ(0);
-      }
+    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl transition-all duration-700 ease-out;
+    
+    /* Initial black and white state */
+    background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+    border: 1px solid #ddd;
+    
+    /* Force hardware acceleration and smooth rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* CSS custom property for dynamic color - will be set via inline style */
+    --buddy-color: #000000;
+    
+    /* Smooth hover animation */
+    &:hover {
+      transform: translateY(-8px) translateZ(0);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, var(--buddy-color) 0%, color-mix(in srgb, var(--buddy-color) 85%, #000000) 100%);
+      border-color: var(--buddy-color);
+    }
+    
+    /* Ensure text colors adapt on hover */
+    &:hover .buddy-card-text {
+      color: white;
+    }
+    
+    &:hover .subject-badge {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    &:hover .buddy-bookmark {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    &:hover .buddy-bookmark svg {
+      color: white;
+    }
   }
+  
+  /* Text elements that need color transition */
+  .buddy-card-text {
+    @apply transition-colors duration-700 ease-out;
+    color: #333;
+  }
+  
   .subject-badge {
-    @apply bg-gray-900 text-white rounded-4xl text-sm px-2 py-1 capitalize;
+    @apply bg-gray-200 text-gray-800 rounded-4xl text-sm px-2 py-1 capitalize transition-all duration-700 ease-out;
+    border: 1px solid #ccc;
   }
+  
   .buddy-bookmark {
-    @apply px-2 bg-gray-900 rounded-4xl flex items-center h-full aspect-square cursor-pointer transition-all duration-500 ease-out;
+    @apply px-2 bg-gray-200 rounded-4xl flex items-center h-full aspect-square cursor-pointer transition-all duration-700 ease-out;
+    border: 1px solid #ccc;
 
-      /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      
-      /* Animasi Hover Smooooth */
-      &:hover {
-          transform: translateY(-4px) translateZ(0);
-      }
+    /* Force hardware acceleration and smooth rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Icon color transition */
+    svg {
+      @apply transition-colors duration-700 ease-out;
+      color: #666;
+    }
   }
+  
   .input {
     @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full;
   }
