@@ -12,7 +12,7 @@ interface BuddyCardProps {
 
 const BuddyCard = ({ ID, name, topic, subject, duration, color}: BuddyCardProps) => {
   return (
-    <article className="buddy-card" style={{ backgroundColor: color }}>
+    <article className="buddy-card" style={{ '--buddy-color': color } as React.CSSProperties}>
      <div className="flex justify-between items-center">
           <div className="subject-badge">{subject}</div>
           <button className="buddy-bookmark">
