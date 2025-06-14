@@ -17,3 +17,31 @@ export const createBuddy = async (formData: CreateBuddy) => {
 
   return data[0];
 };
+
+export const getAllBuddies = async ({
+  limit = 10,
+  page = 1,
+  subject,
+  topic,
+}: GetAllBuddies) => {
+  const supabase = createSupabaseClient();
+
+  let query = supabase.from("buddies").select();
+
+  if (subject && topic) {
+    query = query.ilike("subject", `%${subject}%`)
+      .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+  } else if (subject) {
+    query = query.ilike("subject", `%${subject}%`);
+  } else if (topic) {
+    query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+  }
+
+  query = query.range((page -1) * limit, page * limit - 1);
+
+  const { data: buddies, error} = await query;
+
+  if(error) throw new Error(error.message);
+
+  return buddies;
+};

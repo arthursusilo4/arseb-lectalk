@@ -186,7 +186,7 @@ body {
   }
   .buddy-bookmark {
     @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer transition-all duration-500 ease-out;
-    background-color: #f0f0f0;
+    background-color: #1b1a1a;
     border: 1px solid #d0d0d0;
 
     /* Force hardware acceleration and smooth rendering */

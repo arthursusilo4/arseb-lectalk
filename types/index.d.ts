@@ -35,7 +35,7 @@ interface CreateBuddy {
   duration: number;
 }
 
-interface GetAllCompanions {
+interface GetAllBuddies {
   limit?: number;
   page?: number;
   subject?: string | string[];
