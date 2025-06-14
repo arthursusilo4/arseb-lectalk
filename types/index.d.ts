@@ -26,7 +26,7 @@ type Buddy = Models.DocumentList<Models.Document> & {
   bookmarked: boolean;
 };
 
-interface CreateCompanion {
+interface CreateBuddy {
   name: string;
   subject: string;
   topic: string;
@@ -64,7 +64,6 @@ interface Avatar {
   height: number;
   className?: string;
 }
-
 
 interface SavedMessage {
   role: "user" | "system" | "assistant";

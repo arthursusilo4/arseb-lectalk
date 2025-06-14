@@ -1,6 +1,11 @@
-import BuddyForm from "@/components/buddyForm"
+import BuddyForm from "@/components/buddyForm";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-const NewBuddies = () => {
+const NewBuddies = async () => {
+  const { userId } = await auth();
+  if (!userId) redirect("/sign-in");
+
   return (
     <main className="md:w-1/3 lg:w-1/3 items-center justify-center">
       <article className="w-full gap-4 flex flex-col">
@@ -9,7 +14,7 @@ const NewBuddies = () => {
         <BuddyForm />
       </article>
     </main>
-  )
-}
+  );
+};
 
-export default NewBuddies
+export default NewBuddies;
