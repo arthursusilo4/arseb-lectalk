@@ -29,7 +29,8 @@ export const getAllBuddies = async ({
   let query = supabase.from("buddies").select();
 
   if (subject && topic) {
-    query = query.ilike("subject", `%${subject}%`)
+    query = query
+      .ilike("subject", `%${subject}%`)
       .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
   } else if (subject) {
     query = query.ilike("subject", `%${subject}%`);
@@ -37,11 +38,21 @@ export const getAllBuddies = async ({
     query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
   }
 
-  query = query.range((page -1) * limit, page * limit - 1);
+  query = query.range((page - 1) * limit, page * limit - 1);
 
-  const { data: buddies, error} = await query;
+  const { data: buddies, error } = await query;
 
-  if(error) throw new Error(error.message);
+  if (error) throw new Error(error.message);
 
   return buddies;
+};
+
+export const getBuddy = async (id: string) => {
+  const supabase = createSupabaseClient();
+
+  const { data, error } = await supabase.from("buddies").select().eq("id", id);
+
+  if(error) return console.log(error);
+
+  return data[0];
 };
