@@ -1,3 +1,4 @@
+import BuddyComponent from "@/components/buddyComponent";
 import { getBuddy } from "@/lib/actions/buddy.actions";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
@@ -45,6 +46,7 @@ const BuddySession = async ({ params }: BuddySessionPageProps) => {
             {buddy.duration} minutes
           </div>
       </article>
+      <BuddyComponent />
     </main>
   );
 };
