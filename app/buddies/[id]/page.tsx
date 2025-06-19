@@ -14,6 +14,8 @@ const BuddySession = async ({ params }: BuddySessionPageProps) => {
   const buddy = await getBuddy(id);
   const user = await currentUser();
 
+  const { name, subject, title, topic, duration } = buddy;
+
   if (!user) redirect("/sign-in");
 
   if (!buddy) redirect("/buddies");
@@ -43,10 +45,15 @@ const BuddySession = async ({ params }: BuddySessionPageProps) => {
           </div>
         </div>
         <div className="items-start text-xl max-md:hidden">
-            {buddy.duration} minutes
-          </div>
+          {buddy.duration} minutes
+        </div>
       </article>
-      <BuddyComponent />
+      <BuddyComponent 
+      {...buddy}
+      buddyId={id}
+      userName={user.firstName!}
+      userImage={user.imageUrl!}
+      />
     </main>
   );
 };
