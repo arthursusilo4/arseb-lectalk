@@ -70,8 +70,8 @@ interface SavedMessage {
   content: string;
 }
 
-interface CompanionComponentProps {
-  companionId: string;
+interface BuddyComponentProps {
+  buddyId: string;
   subject: string;
   topic: string;
   name: string;
