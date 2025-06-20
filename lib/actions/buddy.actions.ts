@@ -52,7 +52,15 @@ export const getBuddy = async (id: string) => {
 
   const { data, error } = await supabase.from("buddies").select().eq("id", id);
 
-  if(error) return console.log(error);
+  if (error) {
+    console.log(error);
+    throw new Error(error.message || "Failed to fetch buddy");
+  }
+
+  // Also handle case where no data is found
+  if (!data || data.length === 0) {
+    return null;
+  }
 
   return data[0];
 };
