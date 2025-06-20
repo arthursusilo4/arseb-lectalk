@@ -14,11 +14,14 @@ const BuddySession = async ({ params }: BuddySessionPageProps) => {
   const buddy = await getBuddy(id);
   const user = await currentUser();
 
-  const { name, subject, title, topic, duration } = buddy;
-
+  // Check for user authentication first
   if (!user) redirect("/sign-in");
 
+  // Check if buddy exists before destructuring
   if (!buddy) redirect("/buddies");
+
+  // Now it's safe to destructure since we've confirmed buddy exists
+  const { name, subject, title, topic, duration } = buddy;
 
   return (
     <main>
@@ -49,10 +52,10 @@ const BuddySession = async ({ params }: BuddySessionPageProps) => {
         </div>
       </article>
       <BuddyComponent 
-      {...buddy}
-      buddyId={id}
-      userName={user.firstName!}
-      userImage={user.imageUrl!}
+        {...buddy}
+        buddyId={id}
+        userName={user.firstName!}
+        userImage={user.imageUrl!}
       />
     </main>
   );
