@@ -148,46 +148,72 @@ body {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center;
   }
   .buddy-card {
-    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl transition-all duration-500 ease-out hover:shadow-2xl;
+    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl transition-all duration-500 ease-out;
 
-    /* Initial black and white appearance */
-    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-    border: 1px solid #e0e0e0;
-    color: #333333;
-
-    /* Force hardware acceleration and smooth rendering */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    
     /* CSS custom property for the buddy color */
     --buddy-color: #000000;
     
-    /* Animasi Hover Smooooth */
-    &:hover {
-      transform: translateY(-4px) translateZ(0);
-      /* Transition to template color on hover */
+    /* Force hardware acceleration and smooth rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Desktop: Initial black and white appearance with hover effects */
+    @media (min-width: 768px) {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      border: 1px solid #e0e0e0;
+      color: #333333;
+      
+      &:hover {
+        transform: translateY(-4px) translateZ(0);
+        background: var(--buddy-color);
+        border-color: var(--buddy-color);
+        color: white;
+      }
+    }
+    
+    /* Mobile: Static colored appearance - no animations */
+    @media (max-width: 767px) {
       background: var(--buddy-color);
-      border-color: var(--buddy-color);
+      border: 1px solid var(--buddy-color);
       color: white;
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: none;
+      }
     }
   }
+  
   .subject-badge {
     @apply rounded-4xl text-sm px-2 py-1 capitalize transition-all duration-500 ease-out;
-    background-color: #f0f0f0;
-    color: #666666;
-    border: 1px solid #d0d0d0;
+    
+    /* Desktop: Initial gray appearance with hover effects */
+    @media (min-width: 768px) {
+      background-color: #f0f0f0;
+      color: #666666;
+      border: 1px solid #d0d0d0;
+    }
+    
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
   }
-  .buddy-card:hover .subject-badge {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
+  
+  /* Desktop hover effect for subject badge */
+  @media (min-width: 768px) {
+    .buddy-card:hover .subject-badge {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
   }
+  
   .buddy-bookmark {
     @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer transition-all duration-500 ease-out;
-    background-color: #1b1a1a;
-    border: 1px solid #d0d0d0;
 
     /* Force hardware acceleration and smooth rendering */
     transform: translateZ(0);
@@ -195,15 +221,35 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
-    /* Animasi Hover Smooooth */
-    &:hover {
-      transform: translateY(-4px) translateZ(0);
+    /* Desktop: Initial dark appearance with hover effects */
+    @media (min-width: 768px) {
+      background-color: #1b1a1a;
+      border: 1px solid #d0d0d0;
+      
+      &:hover {
+        transform: translateY(-4px) translateZ(0);
+      }
+    }
+    
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: none;
+      }
     }
   }
-  .buddy-card:hover .buddy-bookmark {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+  
+  /* Desktop hover effect for buddy bookmark */
+  @media (min-width: 768px) {
+    .buddy-card:hover .buddy-bookmark {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
   }
+  
   .input {
     @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full;
   }
@@ -227,19 +273,37 @@ body {
   .call-to-action-badge {
     @apply bg-[#FFDB58] rounded-4xl px-3 py-1.5 text-gray-900;
   }
+  
   .btn-primary {
-    @apply bg-gray-900 text-white rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2 transition-all duration-500 ease-out;
+    @apply rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2 transition-all duration-500 ease-out;
 
-      /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    /* Force hardware acceleration and smooth rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* Desktop: Initial dark appearance with color transition on hover */
+    @media (min-width: 768px) {
+      background-color: #1b1a1a;
+      color: white;
       
-      /* Animasi Hover Smooooth */
       &:hover {
-          transform: translateY(-4px) translateZ(0);
+        transform: translateY(-4px) translateZ(0);
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
       }
+    }
+    
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: none;
+      }
+    }
   }
 
   .btn-new-buddies {
