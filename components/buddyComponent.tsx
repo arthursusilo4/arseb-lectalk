@@ -7,6 +7,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import soundwaves from "@/constants/soundwaves.json";
+import { addSessionHistory } from "@/lib/actions/buddy.actions";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -45,7 +46,10 @@ const BuddyComponent = ({
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
-    const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+    const onCallEnd = () => {
+      setCallStatus(CallStatus.FINISHED);
+      addSessionHistory(buddyId)
+    };
 
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {

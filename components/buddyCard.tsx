@@ -1,8 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 interface BuddyCardProps {
-     ID: string;
+     id: string;
      name: string;
      topic: string;
      subject: string;
@@ -10,7 +12,7 @@ interface BuddyCardProps {
      color: string;
 }
 
-const BuddyCard = ({ ID, name, topic, subject, duration, color}: BuddyCardProps) => {
+const BuddyCard = ({ id, name, topic, subject, duration, color}: BuddyCardProps) => {
   return (
     <article className="buddy-card" style={{ '--buddy-color': color } as React.CSSProperties}>
      <div className="flex justify-between items-center">
@@ -36,7 +38,7 @@ const BuddyCard = ({ ID, name, topic, subject, duration, color}: BuddyCardProps)
           <p className="text-sm">{duration} minutes</p>
      </div>
 
-     <Link href={`/buddies/${ID}`} className="w-full">
+     <Link href={`/buddies/${id}`} className="w-full">
           <button className="btn-primary w-full justify-center">
                Mulai Sesi
           </button>
