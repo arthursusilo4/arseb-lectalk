@@ -4,7 +4,9 @@ import { cn, getSubjectColor } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { error } from "console";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import soundwaves from "@/constants/soundwaves.json";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -25,6 +27,18 @@ const BuddyComponent = ({
 }: BuddyComponentProps) => {
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    if (lottieRef) {
+      if (isSpeaking) {
+        lottieRef.current?.play();
+      } else {
+        lottieRef.current?.stop;
+      }
+    }
+  }, [isSpeaking, lottieRef]);
 
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
@@ -75,8 +89,39 @@ const BuddyComponent = ({
                   "opacity-100 animate-pulse"
               )}
             >
-               <Image src={`/icons/${subject}.svg`} alt={subject} width={145} height={145} className="max-sm:w-fit"/> 
+              <Image
+                src={`/icons/${subject}.svg`}
+                alt={subject}
+                width={145}
+                height={145}
+                className="max-sm:w-fit"
+              />
             </div>
+            <div
+              className={cn(
+                "absolute transition-opacity duration-1000",
+                callStatus === CallStatus.ACTIVE ? "opacity-100" : "opacity-0"
+              )}
+            >
+              <Lottie
+                lottieRef={lottieRef}
+                animationData={soundwaves}
+                autoPlay={false}
+                className="buddy-lottie"
+              />
+            </div>
+          </div>
+          <p className="font-bold text-2xl">{name}</p>
+        </div>
+        <div className="user-section">
+          <div className="user-avatar">
+            <Image
+              src={userImage}
+              alt={userName}
+              width={130}
+              height={130}
+              className="rounded-xl"
+            />
           </div>
         </div>
       </section>
