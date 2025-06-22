@@ -192,7 +192,7 @@ const BuddyComponent = ({
             if (message.role === "assistant") {
               return (
                 <p key={index} className="max-sm:text-sm">
-                  {name.split(" ")[0].replace("/[.,]/g", "")}: {index}
+                  {name.split(" ")[0].replace("/[.,]/g", "")}: {message.content}
                 </p>
               );
             } else {
@@ -201,7 +201,7 @@ const BuddyComponent = ({
                   key={index}
                   className="text-primary max-sm:text-sm"
                 >
-                  {userName}: {index}
+                  {userName}: {message.content}
                 </p>
               );
             }
