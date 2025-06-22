@@ -14,14 +14,14 @@ const NavItems = () => {
      const pathname = usePathname();
 
   return (
-     <nav className='flex items-center gap-4'>
+     <nav className='nav-container'>
           {navItems.map(({label, href}) => (
                <Link 
                href={href} 
                key={label} 
                className={cn(
-               'nav-items',
-               pathname === href && 'text-primary font-bold'
+                    'nav-items',
+                    pathname === href && 'text-primary font-bold active'
                )}
                >
                {label}

@@ -89,6 +89,7 @@
 
 body {
   font-family: var(--font-roboto-slab);
+  @apply pt-20 max-sm:pt-16; /* Added padding to account for fixed navbar */
 }
 
 .dark {
@@ -131,12 +132,45 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    /* Consistent font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   main {
     @apply mx-auto px-14 flex flex-col gap-8 bg-background h-full max-w-[1400px] pt-10 max-sm:px-2;
   }
   h1 {
     @apply text-3xl font-bold;
+  }
+}
+
+/* OPTIMIZED ANIMATION MIXIN */
+@layer utilities {
+  .smooth-animation {
+    /* Optimized hardware acceleration */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+    /* Consistent font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    
+    /* Performance optimization */
+    will-change: transform, background-color, box-shadow;
+    
+    /* Smooth transitions */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift {
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .hover-lift:hover {
+    transform: translate3d(0, -4px, 0);
   }
 }
 
@@ -148,16 +182,11 @@ body {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center;
   }
   .buddy-card {
-    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl transition-all duration-500 ease-out;
+    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl;
+    @apply smooth-animation hover-lift;
 
     /* CSS custom property for the buddy color */
     --buddy-color: #000000;
-    
-    /* Force hardware acceleration and smooth rendering */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     
     /* Desktop: Initial black and white appearance with hover effects */
     @media (min-width: 768px) {
@@ -166,7 +195,6 @@ body {
       color: #333333;
       
       &:hover {
-        transform: translateY(-4px) translateZ(0);
         background: var(--buddy-color);
         border-color: var(--buddy-color);
         color: white;
@@ -180,13 +208,14 @@ body {
       color: white;
       /* Remove hover transform on mobile */
       &:hover {
-        transform: none;
+        transform: translate3d(0, 0, 0);
       }
     }
   }
   
   .subject-badge {
-    @apply rounded-4xl text-sm px-2 py-1 capitalize transition-all duration-500 ease-out;
+    @apply rounded-4xl text-sm px-2 py-1 capitalize;
+    @apply smooth-animation;
     
     /* Desktop: Initial gray appearance with hover effects */
     @media (min-width: 768px) {
@@ -213,22 +242,13 @@ body {
   }
   
   .buddy-bookmark {
-    @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer transition-all duration-500 ease-out;
-
-    /* Force hardware acceleration and smooth rendering */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer;
+    @apply smooth-animation hover-lift;
     
     /* Desktop: Initial dark appearance with hover effects */
     @media (min-width: 768px) {
       background-color: #1b1a1a;
       border: 1px solid #d0d0d0;
-      
-      &:hover {
-        transform: translateY(-4px) translateZ(0);
-      }
     }
     
     /* Mobile: Static white semi-transparent appearance */
@@ -237,7 +257,7 @@ body {
       border: 1px solid rgba(255, 255, 255, 0.3);
       /* Remove hover transform on mobile */
       &:hover {
-        transform: none;
+        transform: translate3d(0, 0, 0);
       }
     }
   }
@@ -257,31 +277,16 @@ body {
     @apply rounded-4xl border border-black;
   }
   .call-to-action-section {
-    @apply bg-gray-600 text-white rounded-4xl px-7 py-10 flex flex-col items-center text-center gap-5 w-1/3 max-lg:w-1/2 max-md:w-full cursor-pointer transition-all duration-500 ease-out;
-
-    /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      
-      /* Animasi Hover Smooooth */
-      &:hover {
-          transform: translateY(-4px) translateZ(0);
-      }
+    @apply bg-gray-600 text-white rounded-4xl px-7 py-10 flex flex-col items-center text-center gap-5 w-1/3 max-lg:w-1/2 max-md:w-full cursor-pointer;
+    @apply smooth-animation hover-lift;
   }
   .call-to-action-badge {
     @apply bg-[#FFDB58] rounded-4xl px-3 py-1.5 text-gray-900;
   }
   
   .btn-primary {
-    @apply rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2 transition-all duration-500 ease-out;
-
-    /* Force hardware acceleration and smooth rendering */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2;
+    @apply smooth-animation;
     
     /* Desktop: Initial dark appearance with color transition on hover */
     @media (min-width: 768px) {
@@ -289,7 +294,7 @@ body {
       color: white;
       
       &:hover {
-        transform: translateY(-4px) translateZ(0);
+        transform: translate3d(0, -4px, 0);
         background-color: rgba(255, 255, 255, 0.2);
         color: white;
       }
@@ -301,58 +306,89 @@ body {
       color: white;
       /* Remove hover transform on mobile */
       &:hover {
-        transform: none;
+        transform: translate3d(0, 0, 0);
       }
     }
   }
 
   .btn-new-buddies {
-    @apply bg-green-600 text-white rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2 transition-all duration-500 ease-out;
-
-      /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      
-      /* Animasi Hover Smooooth */
-      &:hover {
-          transform: translateY(-4px) translateZ(0);
-      }
+    @apply bg-green-600 text-white rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2;
+    @apply smooth-animation hover-lift;
   }
+  
+  /* ENHANCED NAVBAR STYLES */
   .navbar {
-    @apply flex items-center justify-between mx-auto w-full px-14 py-4 bg-white max-sm:px-4;
+    @apply flex items-center justify-between mx-auto w-full px-14 py-3 bg-white max-sm:px-4 fixed top-0 left-0 right-0 z-50;
+    
+    /* Soft shadow bottom border */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.95);
   }
 
+  /* ENHANCED NAV ITEMS WITH ROUNDED BOX AND HOVER EFFECTS */
   .nav-items {
-    @apply transition-all duration-500 ease-out;
-    /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      
-      /* Animasi Hover Smooooth */
-      &:hover {
-          transform: translateY(-4px) translateZ(0);
-      }
-  }
-  .btn-signin {
-    @apply border border-black rounded-4xl px-4 py-2.5 text-sm font-semibold flex items-center gap-2 cursor-pointer;
-  }
-  .buddy-list {
-    @apply rounded-2xl shadow-2xl px-7 pt-7 pb-10 max-lg:w-full bg-white transition-all duration-500 ease-out;
+    @apply px-4 py-2 rounded-xl relative;
+    @apply smooth-animation;
     
-      /* Force hardware acceleration and smooth rendering */
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    /* Hover effects */
+    &:hover {
+      transform: translate3d(0, 0, 0) scale(1.03);
+      background-color: rgba(254, 89, 51, 0.1);
+      box-shadow: 0 4px 12px rgba(254, 89, 51, 0.15);
+    }
+    
+    /* Active state enhancement */
+    &.active {
+      background-color: rgba(254, 89, 51, 0.1);
+      box-shadow: 0 2px 8px rgba(254, 89, 51, 0.1);
+    }
+  }
+
+  /* NEW NAV CONTAINER FOR ROUNDED BOX EFFECT */
+  .nav-container {
+    @apply flex items-center gap-2 bg-gray-50 rounded-xl p-1;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(4px);
+  }
+
+  /* ENHANCED SIGN IN BUTTON */
+  .btn-signin {
+    @apply border border-black rounded-xl px-4 py-2 text-sm font-semibold flex items-center gap-2 cursor-pointer;
+    @apply smooth-animation;
+    
+    &:hover {
+      transform: translate3d(0, 0, 0) scale(1.03);
+      background-color: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* MOBILE RESPONSIVE ADJUSTMENTS */
+  @media (max-width: 640px) {
+    .navbar {
+      @apply py-2;
+    }
+    
+    .nav-items {
+      @apply px-3 py-1.5 text-sm;
       
-      /* Animasi Hover Smooooth */
       &:hover {
-          transform: translateY(-4px) translateZ(0);
+        transform: translate3d(0, 0, 0) scale(1.02);
       }
+    }
+    
+    .btn-signin {
+      &:hover {
+        transform: translate3d(0, 0, 0) scale(1.02);
+      }
+    }
+  }
+  
+  .buddy-list {
+    @apply rounded-2xl shadow-2xl px-7 pt-7 pb-10 max-lg:w-full bg-white;
+    @apply smooth-animation hover-lift;
   }
   .buddy-limit {
     @apply items-center justify-center flex flex-col gap-4 w-full min-2xl:w-1/2 pt-20 text-center;

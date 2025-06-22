@@ -20,7 +20,7 @@ interface BuddyListProps {
 const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
   return (
     <article className={cn('buddy-list', classNames)}>
-     <h2 className="font-bold text-3xl justify-self-center">Sesi Terkini</h2>
+     <h2 className="font-bold text-3xl justify-self-center">Recent Session</h2>
           <Table>
           <TableHeader>
           <TableRow>

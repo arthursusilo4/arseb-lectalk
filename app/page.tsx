@@ -12,7 +12,7 @@ const Page = async () => {
 
   return (
     <main>
-      <h1 className="">Buddy Terpopuler!</h1>
+      <h1 className="">Popular Buddies</h1>
 
       <section className="home-section">
         {buddies.map((buddy) => (
