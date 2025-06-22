@@ -188,20 +188,20 @@ const BuddyComponent = ({
       </section>
       <section className="transcript">
         <div className="transcript-message no-scrollbar">
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             if (message.role === "assistant") {
               return (
-                <p key={message.content} className="max-sm:text-sm">
-                  {name.split(" ")[0].replace("/[.,]/g", "")}: {message.content}
+                <p key={index} className="max-sm:text-sm">
+                  {name.split(" ")[0].replace("/[.,]/g", "")}: {index}
                 </p>
               );
             } else {
               return (
                 <p
-                  key={message.content}
+                  key={index}
                   className="text-primary max-sm:text-sm"
                 >
-                  {userName}: {message.content}
+                  {userName}: {index}
                 </p>
               );
             }
