@@ -13,12 +13,12 @@ const CallToAction = () => {
       <p>
         Begin Learning through Real-Feel Conversations that suits you.
       </p>
-      <Image 
+      {/* <Image 
         src='/images/cta.svg' 
         alt="calltoaction" 
         width={360} 
         height={360}
-      />
+      /> */}
       <button className="btn-new-buddies">
         <Image src='/icons/plus.svg' alt="plus" height={12} width={12}/>
         <Link href='/buddies/new'>

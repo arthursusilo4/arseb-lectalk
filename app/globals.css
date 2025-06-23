@@ -290,7 +290,7 @@ body {
     
     /* Desktop: Initial dark appearance with color transition on hover */
     @media (min-width: 768px) {
-      background-color: #1b1a1a;
+      background-color: #D26805;
       color: white;
       
       &:hover {
