@@ -631,3 +631,63 @@ body {
     }
   }
 }
+
+@layer components {
+  /* Compact version of call-to-action-section */
+  .call-to-action-section-compact {
+    @apply bg-gray-600 text-white rounded-4xl px-5 py-6 flex flex-col items-center text-center gap-3 w-1/3 max-lg:w-1/2 max-md:w-full cursor-pointer;
+    @apply smooth-animation hover-lift;
+  }
+  
+  /* Compact badge with smaller padding */
+  .call-to-action-badge-compact {
+    @apply bg-[#FFDB58] rounded-4xl px-2.5 py-1 text-gray-900 text-sm;
+  }
+  
+  /* Compact heading with smaller text */
+  .call-to-action-heading-compact {
+    @apply text-xl font-bold;
+  }
+  
+  /* Compact paragraph with smaller text */
+  .call-to-action-text-compact {
+    @apply text-sm;
+  }
+  
+  /* Enhanced button with bold plus icon */
+  .btn-new-buddies-compact {
+    @apply bg-green-600 text-white rounded-xl cursor-pointer px-3 py-2 flex items-center gap-2;
+    @apply smooth-animation hover-lift;
+  }
+  
+  /* Bold plus icon styling */
+  .plus-icon-bold {
+    filter: brightness(0) invert(1);
+    font-weight: bold;
+    stroke-width: 3;
+  }
+}
+
+/* Alternative approach: Override existing classes for compact version */
+@layer components {
+  /* Modifier class to make existing call-to-action more compact */
+  .call-to-action-section.compact {
+    @apply px-5 py-6 gap-3;
+  }
+  
+  .call-to-action-section.compact h2 {
+    @apply text-xl;
+  }
+  
+  .call-to-action-section.compact p {
+    @apply text-sm;
+  }
+  
+  .call-to-action-section.compact .call-to-action-badge {
+    @apply px-2.5 py-1 text-sm;
+  }
+  
+  .call-to-action-section.compact .btn-new-buddies {
+    @apply px-3 py-2;
+  }
+}

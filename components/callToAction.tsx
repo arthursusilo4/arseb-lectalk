@@ -3,14 +3,14 @@ import Link from "next/link"
 
 const CallToAction = () => {
   return (
-    <section className="call-to-action-section">
+    <section className="call-to-action-section compact">
       <div className="call-to-action-badge">
         Start your learning track!
       </div>
-      <h2 className='text-2xl font-bold'>
+      <h2 className='text-xl font-bold'>
         Build and Personalize Your Fav Buddy
       </h2>
-      <p>
+      <p className="text-sm">
         Begin Learning through Real-Feel Conversations that suits you.
       </p>
       {/* <Image 
@@ -20,7 +20,13 @@ const CallToAction = () => {
         height={360}
       /> */}
       <button className="btn-new-buddies">
-        <Image src='/icons/plus.svg' alt="plus" height={12} width={12}/>
+        <Image 
+          src='/icons/plus.svg' 
+          alt="plus" 
+          height={12} 
+          width={12}
+          className="plus-icon-bold"
+        />
         <Link href='/buddies/new'>
           <p>
             Create a new buddy
