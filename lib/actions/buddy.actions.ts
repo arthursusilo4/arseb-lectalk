@@ -106,26 +106,127 @@ export const getUserSessions = async (userId: string, limit = 10) => {
   return data.map(({ buddies }) => buddies);
 };
 
-//bookmarks
+//bookmarks - FIXED IMPLEMENTATION
 export const addBookmark = async (buddyId: string, path: string) => {
   const { userId } = await auth();
-  if (!userId) return;
-  const supabase = createSupabaseClient();
-  const { data, error } = await supabase.from("bookmarks").insert({
-    buddy_id: buddyId,
-    user_id: userId,
-  });
-  if (error) {
-    throw new Error(error.message);
-  }
-  // Revalidate the path to force a re-render of the page
+  if (!userId) throw new Error("User not authenticated");
 
+  const supabase = createSupabaseClient();
+
+  // First check if bookmark already exists to prevent duplicates
+  const { data: existing, error: checkError } = await supabase
+    .from("bookmarks")
+    .select("id")
+    .eq("buddy_id", buddyId)
+    .eq("user_id", userId)
+    .single();
+
+  if (checkError && checkError.code !== "PGRST116") {
+    // PGRST116 = no rows returned
+    throw new Error(`Failed to check existing bookmark: ${checkError.message}`);
+  }
+
+  // If bookmark already exists, don't add another one
+  if (existing) {
+    console.log("Bookmark already exists, skipping insertion");
+    revalidatePath(path);
+    return existing;
+  }
+
+  // Add new bookmark
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .insert({
+      buddy_id: buddyId,
+      user_id: userId,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(`Failed to add bookmark: ${error.message}`);
+  }
+
+  console.log("Bookmark added successfully:", data);
   revalidatePath(path);
   return data;
 };
 
 export const removeBookmark = async (buddyId: string, path: string) => {
-  
+  const { userId } = await auth();
+  if (!userId) throw new Error("User not authenticated");
+
+  const supabase = createSupabaseClient();
+
+  // First, let's check if the bookmark exists
+  const { data: existing, error: checkError } = await supabase
+    .from("bookmarks")
+    .select("id")
+    .eq("buddy_id", buddyId)
+    .eq("user_id", userId);
+
+  if (checkError) {
+    throw new Error(`Failed to check existing bookmark: ${checkError.message}`);
+  }
+
+  if (!existing || existing.length === 0) {
+    console.log("No bookmark found to remove");
+    revalidatePath(path);
+    return null;
+  }
+
+  console.log(`Found ${existing.length} bookmark(s) to remove:`, existing);
+
+  // Delete the bookmark(s)
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .delete()
+    .eq("buddy_id", buddyId)
+    .eq("user_id", userId)
+    .select();
+
+  if (error) {
+    throw new Error(`Failed to remove bookmark: ${error.message}`);
+  }
+
+  console.log("Bookmark(s) removed successfully:", data);
+  revalidatePath(path);
+  return data;
+};
+
+// Helper function to check if a buddy is bookmarked (useful for getting initial state)
+export const isBookmarked = async (buddyId: string) => {
+  const { userId } = await auth();
+  if (!userId) return false;
+
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .select("id")
+    .eq("buddy_id", buddyId)
+    .eq("user_id", userId)
+    .single();
+
+  if (error && error.code !== "PGRST116") {
+    // PGRST116 = no rows returned
+    console.error("Error checking bookmark status:", error);
+    return false;
+  }
+
+  return !!data;
+};
+
+export const getBookmarkedBuddies = async (userId: string) => {
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .select(`buddies:buddy_id (*)`)
+    .eq("user_id", userId);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data.map(({ buddies }) => buddies);
 };
 
 export const getUserBuddies = async (userId: string) => {

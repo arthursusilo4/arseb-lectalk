@@ -5,7 +5,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getUserBuddies, getUserSessions } from "@/lib/actions/buddy.actions";
+import {
+  getBookmarkedBuddies,
+  getUserBuddies,
+  getUserSessions,
+} from "@/lib/actions/buddy.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -17,6 +21,7 @@ const Profile = async () => {
 
   const buddies = await getUserBuddies(user.id);
   const sessionHistory = await getUserSessions(user.id);
+  const bookmarkedBuddies = await getBookmarkedBuddies(user.id);
 
   return (
     <main className="min-lg:w-3/4">
@@ -66,17 +71,27 @@ const Profile = async () => {
       </section>
       <Accordion type="multiple">
         <AccordionItem value="recent">
-          <AccordionTrigger className="text-2xl font-bold">Recent Lectures</AccordionTrigger>
+          <AccordionTrigger className="text-2xl font-bold">
+            Recent Lectures
+          </AccordionTrigger>
           <AccordionContent>
             <BuddyList title="Recent Lectures" buddies={sessionHistory} />
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="buddies">
           <AccordionTrigger className="text-2xl font-bold">
-My Buddies {`(${buddies.length})`}
+            My Buddies {`(${buddies.length})`}
           </AccordionTrigger>
           <AccordionContent>
             <BuddyList title="My Buddies" buddies={buddies} />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="bookmark">
+          <AccordionTrigger className="text-2xl font-bold">
+            My Bookmark {`(${bookmarkedBuddies.length})`}
+          </AccordionTrigger>
+          <AccordionContent>
+            <BuddyList title="My Buddies" buddies={bookmarkedBuddies} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
