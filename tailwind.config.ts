@@ -55,9 +55,9 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)',
-			'4xl': '2rem',    // 32px
-			'5xl': '2.5rem',  // 40px
-			'6xl': '3rem',    // 48px
+  			'4xl': '2rem',
+  			'5xl': '2.5rem',
+  			'6xl': '3rem'
   		},
   		keyframes: {
   			'accordion-down': {
