@@ -25,7 +25,7 @@ const BuddyCard = ({
   color,
   bookmarked: initialBookmarked,
 }: BuddyCardProps) => {
-  const pathname = usePathname(); // Fixed typo
+  const pathname = usePathname();
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const [isPending, startTransition] = useTransition();
 
@@ -53,13 +53,14 @@ const BuddyCard = ({
 
   return (
     <article
-      className="buddy-card"
+      className="buddy-card-compact"
       style={{ "--buddy-color": color } as React.CSSProperties}
     >
-      <div className="flex justify-between items-center">
-        <div className="subject-badge">{subject}</div>
+      {/* Header with bookmark and right-side info */}
+      <div className="flex justify-between items-start mb-3">
+        {/* Bookmark - Left side */}
         <button
-          className="buddy-bookmark"
+          className="buddy-bookmark-compact"
           onClick={handleBookmark}
           disabled={isPending}
         >
@@ -74,15 +75,35 @@ const BuddyCard = ({
             height={14.5}
           />
         </button>
-      </div>
-      <h2 className="text-2xl font-bold">{name}</h2>
-      <p className="text-sm">{topic}</p>
-      <div className="flex items-center gap-2">
-        <Image src="/icons/clock.svg" alt="duration" width={14} height={14} />
-        <p className="text-sm">{duration} minutes</p>
+
+        {/* Duration and Subject - Right side */}
+        <div className="flex items-center gap-2">
+          {/* Duration */}
+          <div className="flex items-center gap-1">
+            <Image
+              src="/icons/clock.svg"
+              alt="duration"
+              width={12}
+              height={12}
+            />
+            <span className="text-xs">{duration}m</span>
+          </div>
+
+          {/* Subject Badge */}
+          <div className="subject-badge-compact">{subject}</div>
+        </div>
       </div>
 
-      <Link href={`/buddies/${id}`} className="w-full">
+      {/* Title */}
+      <h2 className="text-xl font-bold mb-2 leading-tight">{name}</h2>
+
+      {/* Topic - Scrollable if too long */}
+      <div className="topic-container">
+        <p className="topic-text">{topic}</p>
+      </div>
+
+      {/* Action Button */}
+      <Link href={`/buddies/${id}`} className="w-full mt-3">
         <button className="btn-primary w-full justify-center">
           Mulai Sesi
         </button>

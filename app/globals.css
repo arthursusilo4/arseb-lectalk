@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -152,23 +152,23 @@ body {
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
-    
+
     /* Consistent font rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    
+
     /* Performance optimization */
     will-change: transform, background-color, box-shadow;
-    
+
     /* Smooth transitions */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .hover-lift {
     transform: translate3d(0, 0, 0);
   }
-  
+
   .hover-lift:hover {
     transform: translate3d(0, -4px, 0);
   }
@@ -187,20 +187,20 @@ body {
 
     /* CSS custom property for the buddy color */
     --buddy-color: #000000;
-    
+
     /* Desktop: Initial black and white appearance with hover effects */
     @media (min-width: 768px) {
       background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
       border: 1px solid #e0e0e0;
       color: #333333;
-      
+
       &:hover {
         background: var(--buddy-color);
         border-color: var(--buddy-color);
         color: white;
       }
     }
-    
+
     /* Mobile: Static colored appearance - no animations */
     @media (max-width: 767px) {
       background: var(--buddy-color);
@@ -212,18 +212,18 @@ body {
       }
     }
   }
-  
+
   .subject-badge {
     @apply rounded-4xl text-sm px-2 py-1 capitalize;
     @apply smooth-animation;
-    
+
     /* Desktop: Initial gray appearance with hover effects */
     @media (min-width: 768px) {
       background-color: #f0f0f0;
       color: #666666;
       border: 1px solid #d0d0d0;
     }
-    
+
     /* Mobile: Static white semi-transparent appearance */
     @media (max-width: 767px) {
       background-color: rgba(255, 255, 255, 0.2);
@@ -231,7 +231,7 @@ body {
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
   }
-  
+
   /* Desktop hover effect for subject badge */
   @media (min-width: 768px) {
     .buddy-card:hover .subject-badge {
@@ -240,17 +240,17 @@ body {
       border-color: rgba(255, 255, 255, 0.3);
     }
   }
-  
+
   .buddy-bookmark {
     @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer;
     @apply smooth-animation hover-lift;
-    
+
     /* Desktop: Initial dark appearance with hover effects */
     @media (min-width: 768px) {
       background-color: #1b1a1a;
       border: 1px solid #d0d0d0;
     }
-    
+
     /* Mobile: Static white semi-transparent appearance */
     @media (max-width: 767px) {
       background-color: rgba(255, 255, 255, 0.2);
@@ -261,7 +261,7 @@ body {
       }
     }
   }
-  
+
   /* Desktop hover effect for buddy bookmark */
   @media (min-width: 768px) {
     .buddy-card:hover .buddy-bookmark {
@@ -269,7 +269,7 @@ body {
       border-color: rgba(255, 255, 255, 0.3);
     }
   }
-  
+
   .input {
     @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full;
   }
@@ -283,30 +283,33 @@ body {
   .call-to-action-badge {
     @apply bg-[#FFDB58] rounded-4xl px-3 py-1.5 text-gray-900;
   }
-  
+
   .btn-primary {
     @apply rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2;
     @apply smooth-animation;
-    
-    /* Desktop: Initial dark appearance with color transition on hover */
+
+    /* Desktop: Consistent orange color with only transform on hover */
     @media (min-width: 768px) {
-      background-color: #D26805;
+      background-color: #d26805;
       color: white;
-      
+
       &:hover {
         transform: translate3d(0, -4px, 0);
-        background-color: rgba(255, 255, 255, 0.2);
+        /* Removed color change - keeping original background and text color */
+        background-color: #d26805;
         color: white;
       }
     }
-    
-    /* Mobile: Static white semi-transparent appearance */
+
+    /* Mobile: Static white semi-transparent appearance with no hover effects */
     @media (max-width: 767px) {
       background-color: rgba(255, 255, 255, 0.2);
       color: white;
-      /* Remove hover transform on mobile */
+      /* No hover transform on mobile */
       &:hover {
         transform: translate3d(0, 0, 0);
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
       }
     }
   }
@@ -315,11 +318,11 @@ body {
     @apply bg-green-600 text-white rounded-xl cursor-pointer px-4 py-2 flex items-center gap-2;
     @apply smooth-animation hover-lift;
   }
-  
+
   /* ENHANCED NAVBAR STYLES */
   .navbar {
     @apply flex items-center justify-between mx-auto w-full px-14 py-3 bg-white max-sm:px-4 fixed top-0 left-0 right-0 z-50;
-    
+
     /* Soft shadow bottom border */
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -331,14 +334,14 @@ body {
   .nav-items {
     @apply px-4 py-2 rounded-xl relative;
     @apply smooth-animation;
-    
+
     /* Hover effects */
     &:hover {
       transform: translate3d(0, 0, 0) scale(1.03);
       background-color: rgba(254, 89, 51, 0.1);
       box-shadow: 0 4px 12px rgba(254, 89, 51, 0.15);
     }
-    
+
     /* Active state enhancement */
     &.active {
       background-color: rgba(254, 89, 51, 0.1);
@@ -357,7 +360,7 @@ body {
   .btn-signin {
     @apply border border-black rounded-xl px-4 py-2 text-sm font-semibold flex items-center gap-2 cursor-pointer;
     @apply smooth-animation;
-    
+
     &:hover {
       transform: translate3d(0, 0, 0) scale(1.03);
       background-color: rgba(0, 0, 0, 0.05);
@@ -370,22 +373,22 @@ body {
     .navbar {
       @apply py-2;
     }
-    
+
     .nav-items {
       @apply px-3 py-1.5 text-sm;
-      
+
       &:hover {
         transform: translate3d(0, 0, 0) scale(1.02);
       }
     }
-    
+
     .btn-signin {
       &:hover {
         transform: translate3d(0, 0, 0) scale(1.02);
       }
     }
   }
-  
+
   .buddy-list {
     @apply rounded-2xl shadow-2xl px-7 pt-7 pb-10 max-lg:w-full bg-white;
     @apply smooth-animation hover-lift;
@@ -430,27 +433,27 @@ body {
   .font-roboto-slab {
     font-family: var(--font-roboto-slab);
   }
-  
+
   .heading-roboto-slab {
     font-family: var(--font-roboto-slab);
     font-weight: 700;
   }
-  
+
   .text-roboto-slab {
     font-family: var(--font-roboto-slab);
     font-weight: 400;
   }
-  
+
   .text-roboto-slab-light {
     font-family: var(--font-roboto-slab);
     font-weight: 300;
   }
-  
+
   .text-roboto-slab-medium {
     font-family: var(--font-roboto-slab);
     font-weight: 500;
   }
-  
+
   .text-roboto-slab-bold {
     font-family: var(--font-roboto-slab);
     font-weight: 700;
@@ -464,5 +467,167 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+@layer components {
+  /* Compact version of buddy-card with reduced padding and gaps */
+  .buddy-card-compact {
+    @apply flex flex-col rounded-2xl px-3 py-3 gap-0 w-full lg:max-w-[410px] justify-between shadow-xl;
+    @apply smooth-animation hover-lift;
+
+    /* CSS custom property for the buddy color */
+    --buddy-color: #000000;
+
+    /* Desktop: Initial black and white appearance with hover effects */
+    @media (min-width: 768px) {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      border: 1px solid #e0e0e0;
+      color: #333333;
+
+      &:hover {
+        background: var(--buddy-color);
+        border-color: var(--buddy-color);
+        color: white;
+      }
+    }
+
+    /* Mobile: Static colored appearance - no animations */
+    @media (max-width: 767px) {
+      background: var(--buddy-color);
+      border: 1px solid var(--buddy-color);
+      color: white;
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+
+  /* Compact subject badge with smaller padding */
+  .subject-badge-compact {
+    @apply rounded-full text-xs px-2 py-1 capitalize;
+    @apply smooth-animation;
+
+    /* Desktop: Initial gray appearance with hover effects */
+    @media (min-width: 768px) {
+      background-color: #f0f0f0;
+      color: #666666;
+      border: 1px solid #d0d0d0;
+    }
+
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  /* Desktop hover effect for compact subject badge */
+  @media (min-width: 768px) {
+    .buddy-card-compact:hover .subject-badge-compact {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  /* Compact bookmark with smaller padding */
+  .buddy-bookmark-compact {
+    @apply px-1.5 py-1.5 rounded-full flex items-center justify-center cursor-pointer;
+    @apply smooth-animation hover-lift;
+    min-width: 28px;
+    min-height: 28px;
+
+    /* Desktop: Initial dark appearance with hover effects */
+    @media (min-width: 768px) {
+      background-color: #1b1a1a;
+      border: 1px solid #d0d0d0;
+    }
+
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+
+  /* Desktop hover effect for compact buddy bookmark */
+  @media (min-width: 768px) {
+    .buddy-card-compact:hover .buddy-bookmark-compact {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  /* Topic container with scrollable overflow */
+  .topic-container {
+    @apply relative mb-1;
+    max-height: 3.5rem; /* Roughly 2-3 lines of text */
+    overflow: hidden;
+  }
+
+  .topic-text {
+    @apply text-sm leading-relaxed;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* For browsers that don't support -webkit-line-clamp */
+    max-height: 3.5rem;
+    line-height: 1.2;
+  }
+
+  /* Scrollable version for very long topics */
+  .topic-container:hover .topic-text {
+    @media (min-width: 768px) {
+      display: block;
+      max-height: 6rem;
+      overflow-y: auto;
+      padding-right: 4px;
+
+      /* Custom scrollbar styling */
+      &::-webkit-scrollbar {
+        width: 3px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+
+  /* Mobile-specific adjustments for topic */
+  @media (max-width: 767px) {
+    .topic-container:hover .topic-text {
+      display: block;
+      max-height: 4rem;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.5);
+      }
+    }
   }
 }
