@@ -2,6 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "@/lib/supabase";
+import { revalidatePath } from "next/cache";
 
 export const createBuddy = async (formData: CreateBuddy) => {
   const { userId: author } = await auth();
@@ -105,14 +106,66 @@ export const getUserSessions = async (userId: string, limit = 10) => {
   return data.map(({ buddies }) => buddies);
 };
 
+//bookmarks
+export const addBookmark = async (buddyId: string, path: string) => {
+  const { userId } = await auth();
+  if (!userId) return;
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase.from("bookmarks").insert({
+    buddy_id: buddyId,
+    user_id: userId,
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+  // Revalidate the path to force a re-render of the page
+
+  revalidatePath(path);
+  return data;
+};
+
+export const removeBookmark = async (buddyId: string, path: string) => {
+  
+};
+
 export const getUserBuddies = async (userId: string) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("buddies")
     .select()
-    .eq("author", userId)
+    .eq("author", userId);
 
   if (error) throw new Error(error.message);
 
   return data;
+};
+
+export const newBuddyPermissions = async () => {
+  const { userId, has } = await auth();
+  const supabase = createSupabaseClient();
+
+  let limit = 0;
+
+  if (has({ plan: "elite" })) {
+    return true;
+  } else if (has({ feature: "3_buddy_limit" })) {
+    limit = 3;
+  } else if (has({ feature: "10_buddy_limit" })) {
+    limit = 5;
+  }
+
+  const { data, error } = await supabase
+    .from("buddies")
+    .select("id", { count: "exact" })
+    .eq("author", userId);
+
+  if (error) throw new Error(error.message);
+
+  const buddyCount = data?.length;
+
+  if (buddyCount >= limit) {
+    return false;
+  } else {
+    return true;
+  }
 };
