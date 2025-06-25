@@ -26,12 +26,14 @@ const Page = async () => {
 
       <section className="home-section">
         <CallToAction />
+        <div>‎</div>
         <BuddyList
           title="Recently Completed Sessions"
           buddies={recentSessionsBuddies}
           classNames="w-2/3 max-lg:w-full"
         />
       </section>
+      <div>‎</div>
     </main>
   );
 };

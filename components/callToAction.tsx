@@ -13,13 +13,13 @@ const CallToAction = () => {
       <p className="text-sm">
         Begin Learning through Real-Feel Conversations that suits you.
       </p>
-      {/* <Image 
+      <Image 
         src='/images/cta.svg' 
         alt="calltoaction" 
         width={360} 
         height={360}
-      /> */}
-      <button className="btn-new-buddies">
+      />
+      <button className="btn-new-buddies mt-2">
         <Image 
           src='/icons/plus.svg' 
           alt="plus" 

@@ -68,11 +68,10 @@ const BuddyForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="buddy-form-split">
-          {/* Left Section - Basic Information */}
+          {/* Basic Information */}
           <div className="buddy-form-left">
             <div className="buddy-form-section">
-              <h3 className="buddy-form-section-header">Basic Information</h3>
-              <div className="space-y-6">
+              <div className="">
                 <FormField
                   control={form.control}
                   name="name"
@@ -145,11 +144,10 @@ const BuddyForm = () => {
             </div>
           </div>
 
-          {/* Right Section - Advanced Settings */}
+          {/* Advanced Settings */}
           <div className="buddy-form-right">
             <div className="buddy-form-section">
-              <h3 className="buddy-form-section-header">Advanced Settings</h3>
-              <div className="space-y-6">
+              <div className="">
                 <FormField
                   control={form.control}
                   name="voice"
@@ -193,7 +191,9 @@ const BuddyForm = () => {
                           </SelectTrigger>
                           <SelectContent className="bg-white">
                             <SelectItem value="formal">Formal</SelectItem>
-                            <SelectItem value="informal">Informal/Casual</SelectItem>
+                            <SelectItem value="informal">
+                              Informal/Casual
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -231,6 +231,7 @@ const BuddyForm = () => {
             Done, Submit
           </button>
         </div>
+        <div>‎</div>
       </form>
     </Form>
   );

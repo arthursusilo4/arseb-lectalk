@@ -12,7 +12,7 @@ const NewBuddies = async () => {
   const canCreateBuddy = await newBuddyPermissions();
 
   return (
-    <main className="new-buddies-container">
+    <main className="md:w-1/3 lg:w-1/3 items-center justify-center">
       {canCreateBuddy ? (
         <article className="w-full gap-4 flex flex-col">
           <h1>Buddy Maker Panel</h1>
