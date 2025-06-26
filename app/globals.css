@@ -336,43 +336,39 @@ body {
     @apply smooth-animation hover-lift;
     /* CSS custom property for the buddy color - changed to orange */
     --buddy-color: #ff6b35;
-    
+
     /* Desktop: Initial black and white appearance with hover effects */
     @media (min-width: 768px) {
-      background: linear-gradient(135deg, 
-#ffffff 0%, 
-#f5f5f5 100%);
-      border: 1px solid 
-#e0e0e0;
-      color: 
-#333333;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      border: 1px solid #e0e0e0;
+      color: #333333;
       &:hover {
         background: var(--buddy-color);
         border-color: var(--buddy-color);
         color: white;
       }
     }
-    
-    /* Mobile: Static colored appearance with compact padding */
+
+    /* Mobile: Default appearance (inactive state) */
     @media (max-width: 767px) {
       padding: 0.75rem 0.375rem; /* More compact padding on mobile */
-      background: var(--buddy-color);
-      border: 1px solid var(--buddy-color);
-      color: white;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      border: 1px solid #e0e0e0;
+      color: #333333;
       font-size: 0.875rem; /* Slightly smaller text */
       /* Remove hover transform on mobile */
       &:hover {
         transform: translate3d(0, 0, 0);
       }
     }
-    
+
     /* Active state for current page */
     &.active {
       background: var(--buddy-color);
       border-color: var(--buddy-color);
       color: white;
       box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-      
+
       /* On desktop, maintain active state even on hover */
       @media (min-width: 768px) {
         &:hover {
@@ -384,14 +380,14 @@ body {
       }
     }
   }
-  
+
   /* NAV CONTAINER FOR ROUNDED BOX EFFECT */
   .nav-container {
     @apply flex items-center gap-2 bg-gray-50 rounded-xl p-1;
     border: 1px solid rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(4px);
   }
-  
+
   /* More compact nav-container on mobile */
   @media (max-width: 767px) {
     .nav-container {
@@ -416,14 +412,6 @@ body {
   @media (max-width: 640px) {
     .navbar {
       @apply py-2;
-    }
-
-    .nav-items {
-      @apply px-3 py-1.5 text-sm;
-
-      &:hover {
-        transform: translate3d(0, 0, 0) scale(1.02);
-      }
     }
 
     .btn-signin {
