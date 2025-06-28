@@ -181,37 +181,6 @@ body {
   .buddies-grid {
     @apply flex flex-wrap gap-4 w-full max-md:justify-center;
   }
-  .buddy-card {
-    @apply flex flex-col rounded-2xl px-4 py-4 gap-5 w-full lg:max-w-[410px] justify-between shadow-xl;
-    @apply smooth-animation hover-lift;
-
-    /* CSS custom property for the buddy color */
-    --buddy-color: #000000;
-
-    /* Desktop: Initial black and white appearance with hover effects */
-    @media (min-width: 768px) {
-      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-      border: 1px solid #e0e0e0;
-      color: #333333;
-
-      &:hover {
-        background: var(--buddy-color);
-        border-color: var(--buddy-color);
-        color: white;
-      }
-    }
-
-    /* Mobile: Static colored appearance - no animations */
-    @media (max-width: 767px) {
-      background: var(--buddy-color);
-      border: 1px solid var(--buddy-color);
-      color: white;
-      /* Remove hover transform on mobile */
-      &:hover {
-        transform: translate3d(0, 0, 0);
-      }
-    }
-  }
 
   .subject-badge {
     @apply rounded-4xl text-sm px-2 py-1 capitalize;
@@ -232,14 +201,6 @@ body {
     }
   }
 
-  /* Desktop hover effect for subject badge */
-  @media (min-width: 768px) {
-    .buddy-card:hover .subject-badge {
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-  }
 
   .buddy-bookmark {
     @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer;
@@ -259,14 +220,6 @@ body {
       &:hover {
         transform: translate3d(0, 0, 0);
       }
-    }
-  }
-
-  /* Desktop hover effect for buddy bookmark */
-  @media (min-width: 768px) {
-    .buddy-card:hover .buddy-bookmark {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.3);
     }
   }
 
@@ -335,7 +288,7 @@ body {
     @apply px-4 py-2 rounded-xl relative;
     @apply smooth-animation hover-lift;
     /* CSS custom property for the buddy color - changed to orange */
-    --buddy-color: #ff6b35;
+    --buddy-color: #d26805;
 
     /* Desktop: Initial black and white appearance with hover effects */
     @media (min-width: 768px) {
@@ -597,6 +550,73 @@ body {
     }
   }
 
+  /* NEW: Compact delete button styling */
+  .buddy-delete-compact {
+    @apply px-1.5 py-1.5 rounded-full flex items-center justify-center cursor-pointer;
+    @apply smooth-animation hover-lift;
+    min-width: 28px;
+    min-height: 28px;
+
+    /* Desktop: Initial light red appearance with hover effects */
+    @media (min-width: 768px) {
+      background-color: #fee2e2;
+      border: 1px solid #fecaca;
+      
+      &:hover {
+        background-color: #ef4444;
+        border-color: #dc2626;
+      }
+    }
+
+    /* Mobile: Static white semi-transparent appearance */
+    @media (max-width: 767px) {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      /* Remove hover transform on mobile */
+      &:hover {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+
+  /* Desktop hover effect for compact delete button */
+  @media (min-width: 768px) {
+    .buddy-card-compact:hover .buddy-delete-compact {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  /* NEW: Bookmark icon styling with orange accent */
+  .bookmark-icon {
+    @apply transition-all duration-200;
+    
+    /* Default orange color for bookmark */
+    filter: invert(60%) sepia(89%) saturate(1500%) hue-rotate(345deg) brightness(100%) contrast(101%); /* Orange color */
+  }
+
+  /* Desktop: Keep orange on card hover */
+  @media (min-width: 768px) {
+    .buddy-card-compact:hover .bookmark-icon {
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%); /* White color */
+    }
+  }
+
+  /* NEW: Clock icon styling to turn white on hover */
+  .clock-icon {
+    @apply transition-all duration-200;
+    
+    /* Default dark color */
+    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+  }
+
+  /* Desktop: Turn white on card hover */
+  @media (min-width: 768px) {
+    .buddy-card-compact:hover .clock-icon {
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%); /* White color */
+    }
+  }
+
   /* Topic container with scrollable overflow */
   .topic-container {
     @apply relative mb-1;
@@ -662,41 +682,29 @@ body {
       }
     }
   }
-}
 
-@layer components {
-  /* Compact version of call-to-action-section */
-  .call-to-action-section-compact {
-    @apply bg-gray-600 text-white rounded-4xl px-5 py-6 flex flex-col items-center text-center gap-3 w-1/3 max-lg:w-1/2 max-md:w-full cursor-pointer;
-    @apply smooth-animation hover-lift;
+  /* Animation classes for toast */
+  @keyframes slide-in-from-top {
+    from {
+      transform: translate(-50%, -100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
   }
 
-  /* Compact badge with smaller padding */
-  .call-to-action-badge-compact {
-    @apply bg-[#FFDB58] rounded-4xl px-2.5 py-1 text-gray-900 text-sm;
+  .animate-in {
+    animation-fill-mode: both;
   }
 
-  /* Compact heading with smaller text */
-  .call-to-action-heading-compact {
-    @apply text-xl font-bold;
+  .slide-in-from-top {
+    animation-name: slide-in-from-top;
   }
 
-  /* Compact paragraph with smaller text */
-  .call-to-action-text-compact {
-    @apply text-sm;
-  }
-
-  /* Enhanced button with bold plus icon */
-  .btn-new-buddies-compact {
-    @apply bg-green-600 text-white rounded-xl cursor-pointer px-3 py-2 flex items-center gap-2;
-    @apply smooth-animation hover-lift;
-  }
-
-  /* Bold plus icon styling */
-  .plus-icon-bold {
-    filter: brightness(0) invert(1);
-    font-weight: bold;
-    stroke-width: 3;
+  .duration-300 {
+    animation-duration: 300ms;
   }
 }
 

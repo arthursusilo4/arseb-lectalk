@@ -66,6 +66,56 @@ export const getBuddy = async (id: string) => {
   return data[0];
 };
 
+// NEW: Delete buddy function
+export const deleteBuddy = async (buddyId: string, path: string) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("User not authenticated");
+
+  const supabase = createSupabaseClient();
+
+  // First verify the buddy belongs to the user
+  const { data: buddy, error: fetchError } = await supabase
+    .from("buddies")
+    .select("author")
+    .eq("id", buddyId)
+    .single();
+
+  if (fetchError) {
+    throw new Error(`Failed to fetch buddy: ${fetchError.message}`);
+  }
+
+  if (!buddy || buddy.author !== userId) {
+    throw new Error("You don't have permission to delete this buddy");
+  }
+
+  // Delete related records first (cascade delete)
+  // Delete session history
+  await supabase
+    .from("session_history")
+    .delete()
+    .eq("buddy_id", buddyId);
+
+  // Delete bookmarks
+  await supabase
+    .from("bookmarks")
+    .delete()
+    .eq("buddy_id", buddyId);
+
+  // Finally delete the buddy
+  const { error: deleteError } = await supabase
+    .from("buddies")
+    .delete()
+    .eq("id", buddyId);
+
+  if (deleteError) {
+    throw new Error(`Failed to delete buddy: ${deleteError.message}`);
+  }
+
+  console.log("Buddy deleted successfully:", buddyId);
+  revalidatePath(path);
+  return true;
+};
+
 export const addSessionHistory = async (buddyId: string) => {
   const { userId } = await auth();
   const supabase = createSupabaseClient();

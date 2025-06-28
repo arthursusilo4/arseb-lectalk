@@ -20,9 +20,12 @@ interface BuddyListProps {
 const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
   return (
     <article className={cn('buddy-list', classNames)}>
-     <h2 className="font-bold text-3xl justify-self-center">{title}</h2>
+     <h2 className="buddy-list-title">{title}</h2>
+     
+     {/* Scrollable container for the table */}
+     <div className="buddy-list-scroll-container">
           <Table>
-          <TableHeader>
+          <TableHeader className="buddy-list-header">
           <TableRow>
                <TableHead className="w-2/3 text-lg">Lessons</TableHead>
                <TableHead className="text-lg">Subject</TableHead>
@@ -31,7 +34,7 @@ const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
           </TableHeader>
           <TableBody>
                {buddies?.map(({ id, subject, name, topic, duration }) => (
-                    <TableRow key={id}>
+                    <TableRow key={id} className="buddy-list-row">
                          <TableCell>
                               <Link href={`/buddies/${id}`}>
                                    <div className="flex items-center gap-2">
@@ -44,7 +47,7 @@ const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
                                         </div>
                                         <div className="flex flex-col gap-2 pl-2">
                                              <p className="font-bold text-xl">{name}</p>
-                                             <p className="text-lg">{topic}</p>
+                                             <p className="text-lg text-gray-600">{topic}</p>
                                         </div>
                                    </div>
                               </Link>
@@ -64,7 +67,7 @@ const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
                          </TableCell>
                          <TableCell>
                               <div className='flex items-center gap-2 w-full justify-end'>
-                                   <p className='text-xl'>
+                                   <p className='text-xl font-medium'>
                                         {duration} {''}
                                         <span className='max-md:hidden'>Mins</span>
                                    </p>
@@ -81,7 +84,7 @@ const BuddyList = ({ title, buddies, classNames }: BuddyListProps) => {
                ))}
           </TableBody>
           </Table>
-
+     </div>
     </article>
   )
 }
