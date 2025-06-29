@@ -201,7 +201,6 @@ body {
     }
   }
 
-
   .buddy-bookmark {
     @apply px-2 rounded-4xl flex items-center h-full aspect-square cursor-pointer;
     @apply smooth-animation hover-lift;
@@ -225,6 +224,10 @@ body {
 
   .input {
     @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full;
+  }
+
+  .input-with-hover {
+    @apply !border-black !bg-white focus-visible:!ring-0 focus-visible:!border-black !w-full hover:!border-[#d26805] transition-colors duration-200;
   }
   .rounded-border {
     @apply rounded-4xl border border-black;
@@ -561,7 +564,7 @@ body {
     @media (min-width: 768px) {
       background-color: #fee2e2;
       border: 1px solid #fecaca;
-      
+
       &:hover {
         background-color: #ef4444;
         border-color: #dc2626;
@@ -590,30 +593,34 @@ body {
   /* NEW: Bookmark icon styling with orange accent */
   .bookmark-icon {
     @apply transition-all duration-200;
-    
+
     /* Default orange color for bookmark */
-    filter: invert(60%) sepia(89%) saturate(1500%) hue-rotate(345deg) brightness(100%) contrast(101%); /* Orange color */
+    filter: invert(60%) sepia(89%) saturate(1500%) hue-rotate(345deg)
+      brightness(100%) contrast(101%); /* Orange color */
   }
 
   /* Desktop: Keep orange on card hover */
   @media (min-width: 768px) {
     .buddy-card-compact:hover .bookmark-icon {
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%); /* White color */
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg)
+        brightness(100%) contrast(100%); /* White color */
     }
   }
 
   /* NEW: Clock icon styling to turn white on hover */
   .clock-icon {
     @apply transition-all duration-200;
-    
+
     /* Default dark color */
-    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%)
+      contrast(100%);
   }
 
   /* Desktop: Turn white on card hover */
   @media (min-width: 768px) {
     .buddy-card-compact:hover .clock-icon {
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%); /* White color */
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg)
+        brightness(100%) contrast(100%); /* White color */
     }
   }
 
