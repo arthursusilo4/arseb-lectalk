@@ -530,7 +530,7 @@ body {
 
     /* Desktop: Initial dark appearance with hover effects */
     @media (min-width: 768px) {
-      background-color: #1b1a1a;
+      background-color: #494747;
       border: 1px solid #d0d0d0;
     }
 
