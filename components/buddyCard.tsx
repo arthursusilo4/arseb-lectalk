@@ -252,7 +252,7 @@ const BuddyCard = ({
         {/* Action Button */}
         <Link href={`/buddies/${id}`} className="w-full mt-3">
           <button className="btn-primary w-full justify-center">
-            Mulai Sesi
+            Begin Lecture
           </button>
         </Link>
       </article>
