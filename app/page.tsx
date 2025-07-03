@@ -20,6 +20,7 @@ const Page = async () => {
             key={buddy.id}
             {...buddy}
             color={getSubjectColor(buddy.subject)}
+            isOwner={false} // These are public buddies, user doesn't own them
           />
         ))}
       </section>

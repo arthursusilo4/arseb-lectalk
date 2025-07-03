@@ -18,7 +18,7 @@ interface BuddyCardProps {
   duration: number;
   color: string;
   bookmarked: boolean;
-  isOwner?: boolean; // Add prop to determine if user owns this buddy
+  isOwner?: boolean; // Prop to determine if user owns this buddy
 }
 
 interface DeleteModalProps {
@@ -224,20 +224,22 @@ const BuddyCard = ({
             {/* Subject Badge */}
             <div className="subject-badge-compact">{subject}</div>
 
-            {/* Delete Button - Always show for now */}
-            <button
-              className="buddy-delete-compact"
-              onClick={handleDelete}
-              disabled={isPending}
-              title="Delete buddy"
-            >
-              <Image
-                src="/icons/trash.svg"
-                alt="delete"
-                width={12}
-                height={12}
-              />
-            </button>
+            {/* Delete Button - Only show if user owns this buddy */}
+            {isOwner && (
+              <button
+                className="buddy-delete-compact"
+                onClick={handleDelete}
+                disabled={isPending}
+                title="Delete buddy"
+              >
+                <Image
+                  src="/icons/trash.svg"
+                  alt="delete"
+                  width={12}
+                  height={12}
+                />
+              </button>
+            )}
           </div>
         </div>
 
@@ -257,20 +259,24 @@ const BuddyCard = ({
         </Link>
       </article>
 
-      {/* Delete confirmation modal */}
-      <DeleteModal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        onConfirm={confirmDelete}
-        buddyName={name}
-      />
+      {/* Delete confirmation modal - Only render if user is owner */}
+      {isOwner && (
+        <DeleteModal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={confirmDelete}
+          buddyName={name}
+        />
+      )}
 
-      {/* Success toast */}
-      <SuccessToast
-        message="Your buddy has successfully been deleted"
-        isVisible={showSuccessToast}
-        onClose={() => setShowSuccessToast(false)}
-      />
+      {/* Success toast - Only render if user is owner */}
+      {isOwner && (
+        <SuccessToast
+          message="Your buddy has successfully been deleted"
+          isVisible={showSuccessToast}
+          onClose={() => setShowSuccessToast(false)}
+        />
+      )}
     </>
   );
 };

@@ -26,15 +26,18 @@ const BuddiesLibrary = async ({ searchParams }: SearchParams) => {
       <section className="buddies-grid">
         {buddies.length > 0 ? (
           buddies.map((buddy) => (
-            <BuddyCard 
-              key={buddy.id} 
-              {...buddy} 
+            <BuddyCard
+              key={buddy.id}
+              {...buddy}
               color={getSubjectColor(buddy.subject)}
+              isOwner={true} // These are user's own buddies, they can delete them
             />
           ))
         ) : (
           <div className="col-span-full text-center py-8">
-            <p className="text-gray-500">No buddies found. Create your first buddy!</p>
+            <p className="text-gray-500">
+              No buddies found. Create your first buddy!
+            </p>
           </div>
         )}
       </section>
