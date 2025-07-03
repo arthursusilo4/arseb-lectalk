@@ -25,6 +25,7 @@ export const getAllBuddies = async ({
   subject,
   topic,
 }: GetAllBuddies) => {
+  const { userId } = await auth();
   const supabase = createSupabaseClient();
 
   let query = supabase.from("buddies").select();
@@ -45,7 +46,19 @@ export const getAllBuddies = async ({
 
   if (error) throw new Error(error.message);
 
-  return buddies;
+  // If user is authenticated, check bookmark status for each buddy
+  if (userId && buddies) {
+    const buddiesWithBookmarks = await Promise.all(
+      buddies.map(async (buddy) => {
+        const bookmarked = await isBookmarked(buddy.id);
+        return { ...buddy, bookmarked };
+      })
+    );
+    return buddiesWithBookmarks;
+  }
+
+  // If not authenticated, return buddies with bookmarked = false
+  return buddies?.map((buddy) => ({ ...buddy, bookmarked: false })) || [];
 };
 
 // NEW: Get user's own buddies with filtering
@@ -78,7 +91,18 @@ export const getUserBuddiesWithFilters = async ({
 
   if (error) throw new Error(error.message);
 
-  return buddies;
+  // For user's own buddies, check bookmark status
+  if (buddies) {
+    const buddiesWithBookmarks = await Promise.all(
+      buddies.map(async (buddy) => {
+        const bookmarked = await isBookmarked(buddy.id);
+        return { ...buddy, bookmarked };
+      })
+    );
+    return buddiesWithBookmarks;
+  }
+
+  return [];
 };
 
 export const getBuddy = async (id: string) => {
@@ -123,16 +147,10 @@ export const deleteBuddy = async (buddyId: string, path: string) => {
 
   // Delete related records first (cascade delete)
   // Delete session history
-  await supabase
-    .from("session_history")
-    .delete()
-    .eq("buddy_id", buddyId);
+  await supabase.from("session_history").delete().eq("buddy_id", buddyId);
 
   // Delete bookmarks
-  await supabase
-    .from("bookmarks")
-    .delete()
-    .eq("buddy_id", buddyId);
+  await supabase.from("bookmarks").delete().eq("buddy_id", buddyId);
 
   // Finally delete the buddy
   const { error: deleteError } = await supabase
@@ -163,6 +181,7 @@ export const addSessionHistory = async (buddyId: string) => {
 };
 
 export const getRecentSessions = async (limit = 10) => {
+  const { userId } = await auth();
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("session_history")
@@ -172,7 +191,20 @@ export const getRecentSessions = async (limit = 10) => {
 
   if (error) throw new Error(error.message);
 
-  return data.map(({ buddies }) => buddies);
+  const buddies = data.map(({ buddies }) => buddies);
+
+  // Add bookmark status if user is authenticated
+  if (userId && buddies) {
+    const buddiesWithBookmarks = await Promise.all(
+      buddies.map(async (buddy) => {
+        const bookmarked = await isBookmarked(buddy.id);
+        return { ...buddy, bookmarked };
+      })
+    );
+    return buddiesWithBookmarks;
+  }
+
+  return buddies?.map((buddy) => ({ ...buddy, bookmarked: false })) || [];
 };
 
 export const getUserSessions = async (userId: string, limit = 10) => {
@@ -186,7 +218,20 @@ export const getUserSessions = async (userId: string, limit = 10) => {
 
   if (error) throw new Error(error.message);
 
-  return data.map(({ buddies }) => buddies);
+  const buddies = data.map(({ buddies }) => buddies);
+
+  // Add bookmark status
+  if (buddies) {
+    const buddiesWithBookmarks = await Promise.all(
+      buddies.map(async (buddy) => {
+        const bookmarked = await isBookmarked(buddy.id);
+        return { ...buddy, bookmarked };
+      })
+    );
+    return buddiesWithBookmarks;
+  }
+
+  return [];
 };
 
 //bookmarks - FIXED IMPLEMENTATION
@@ -309,7 +354,10 @@ export const getBookmarkedBuddies = async (userId: string) => {
     throw new Error(error.message);
   }
 
-  return data.map(({ buddies }) => buddies);
+  const buddies = data.map(({ buddies }) => buddies);
+
+  // Add bookmark status (will be true since these are bookmarked)
+  return buddies.map((buddy) => ({ ...buddy, bookmarked: true }));
 };
 
 export const getUserBuddies = async (userId: string) => {
@@ -340,12 +388,12 @@ export const newBuddyPermissions = async () => {
 
   const { data, error } = await supabase
     .from("buddies")
-    .select("id", { count: "exact" })
+    .select("id")
     .eq("author", userId);
 
   if (error) throw new Error(error.message);
 
-  const buddyCount = data?.length;
+  const buddyCount = data?.length || 0;
 
   if (buddyCount >= limit) {
     return false;
