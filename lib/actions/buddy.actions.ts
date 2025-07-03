@@ -48,6 +48,39 @@ export const getAllBuddies = async ({
   return buddies;
 };
 
+// NEW: Get user's own buddies with filtering
+export const getUserBuddiesWithFilters = async ({
+  limit = 10,
+  page = 1,
+  subject,
+  topic,
+}: GetAllBuddies) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("User not authenticated");
+
+  const supabase = createSupabaseClient();
+
+  let query = supabase.from("buddies").select().eq("author", userId);
+
+  if (subject && topic) {
+    query = query
+      .ilike("subject", `%${subject}%`)
+      .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+  } else if (subject) {
+    query = query.ilike("subject", `%${subject}%`);
+  } else if (topic) {
+    query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+  }
+
+  query = query.range((page - 1) * limit, page * limit - 1);
+
+  const { data: buddies, error } = await query;
+
+  if (error) throw new Error(error.message);
+
+  return buddies;
+};
+
 export const getBuddy = async (id: string) => {
   const supabase = createSupabaseClient();
 
